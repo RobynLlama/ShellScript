@@ -5,7 +5,7 @@ namespace ShellCompiler;
 
 public static partial class Synthesizers
 {
-  public static IConditional AssembleConditional(Queue<Block> blocks)
+  public static IConditional AssembleConditional(Queue<IToken> tokens)
   {
     //Condition needs
     //  open_parenthesis
@@ -20,20 +20,22 @@ public static partial class Synthesizers
     bool par_closed = false;
     bool par_opened = false;
 
-    while (blocks.Count > 0)
+    while (tokens.Count > 0)
     {
 
-      var current = blocks.Dequeue();
+      var current = tokens.Dequeue();
       //Console.WriteLine(current.GetType().Name);
 
-      if (current is Keyword ckw)
+      /*
+      if (current is KeywordBlock ckw)
       {
-        //Console.WriteLine(ckw.Symbol);
+        Console.WriteLine(ckw.Symbol);
       }
+      */
 
       if (!par_opened)
       {
-        if (current is not Keyword kw || kw.Symbol != ReservedSymbol.PARENTHESIS_OPEN)
+        if (current is not IKeyword kw || kw.Symbol != ReservedSymbol.PARENTHESIS_OPEN)
           throw new InvalidOperationException($"Expecting an open parenthesis while building conditional. Block: {current.GetType().Name}");
 
         par_opened = true;
@@ -51,7 +53,7 @@ public static partial class Synthesizers
 
       if (symbol == ReservedSymbol.STATEMENT_TERMINATOR)
       {
-        if (current is not Keyword kw)
+        if (current is not IKeyword kw)
           throw new InvalidOperationException($"Expected keyword while building conditional. Block: {current.GetType().Name}");
 
         symbol = kw.Symbol;
@@ -69,7 +71,7 @@ public static partial class Synthesizers
 
       if (!par_closed)
       {
-        if (current is not Keyword kw || kw.Symbol != ReservedSymbol.PARENTHESIS_CLOSE)
+        if (current is not IKeyword kw || kw.Symbol != ReservedSymbol.PARENTHESIS_CLOSE)
           throw new InvalidOperationException($"Expecting an close parenthesis while building conditional. Block: {current.GetType().Name}");
 
         par_closed = true;

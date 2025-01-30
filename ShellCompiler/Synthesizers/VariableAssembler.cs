@@ -4,15 +4,15 @@ namespace ShellCompiler;
 
 public static partial class Synthesizers
 {
-  public static Literal AssembleReadVariable(Queue<Block> blocks)
+  public static Literal AssembleReadVariable(Queue<IToken> tokens)
   {
     //Variable needs
     // literal for name
 
-    if (blocks.Count == 0)
+    if (tokens.Count == 0)
       throw new InvalidOperationException("Unexpected end of file while assembling a read variable");
 
-    var next = blocks.Dequeue();
+    var next = tokens.Dequeue();
 
     if (next is not Literal lit)
       throw new InvalidOperationException($"Literal expected while assembling a read variable. Block: {next.GetType().Name}");
