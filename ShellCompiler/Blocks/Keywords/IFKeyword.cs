@@ -14,12 +14,12 @@ public class IFKeyword : Keyword
     // - Statement(s) to run
     // - END block
 
-    Console.WriteLine("Creating conditional");
+    //Console.WriteLine("Creating conditional");
 
     IConditional conditional = Synthesizers.AssembleConditional(blocks);
     List<Statement> statements = [];
 
-    Console.WriteLine($"Accumulating statements for depth {Depth}");
+    //Console.WriteLine($"Accumulating statements for depth {Depth}");
 
     while (blocks.Count > 0)
     {

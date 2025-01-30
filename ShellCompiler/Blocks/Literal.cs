@@ -102,7 +102,7 @@ public partial class Literal(string input) : Block
           case ReservedSymbol.LESS_THAN:
           case ReservedSymbol.DOUBLE_LESS_THAN:
           case ReservedSymbol.PIPE:
-            Console.WriteLine("Consumed a redirect symbol");
+            //Console.WriteLine("Consumed a redirect symbol");
             continue;
           case ReservedSymbol.STATEMENT_TERMINATOR:
             goto finish;
