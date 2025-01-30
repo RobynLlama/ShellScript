@@ -28,5 +28,6 @@ public class ShellExecutable(RunApplicationNoReturn runNoReturnDelegate, RunAppl
 
   public void CompileProgram(string input)
   {
+    _program = ShellAssembler.CompileAssembly(ShellAssembler.ParseTokens(ShellAssembler.TokenizeString(input)));
   }
 }
