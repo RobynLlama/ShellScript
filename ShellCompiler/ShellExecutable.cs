@@ -1,3 +1,5 @@
+using System.Collections;
+
 using ShellCompiler.Statements;
 
 namespace ShellCompiler;
@@ -16,14 +18,13 @@ public class ShellExecutable(RunApplicationNoReturn runNoReturnDelegate, RunAppl
 
   private Statement[] _program = [];
 
-  public object? RunProgram()
+  public IEnumerator RunProgram()
   {
     foreach (var item in _program)
     {
       item.Execute(this);
+      yield return 0;
     }
-
-    return null;
   }
 
   public void CompileProgram(string input)
