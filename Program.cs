@@ -29,32 +29,49 @@ echo "Script done!"
 
 """;
 
-clock.Start();
+ShellExecutable waah = new(runNoReturn, runWithReturn, GetVariableMethod, SetVariableMethod);
 
-var tokens = ShellAssembler.TokenizeString(script);
-Console.WriteLine($"Script tokenized in {clock.ElapsedMilliseconds} ms");
-
-clock.Restart();
-
-var blocks = ShellAssembler.ParseTokens(tokens);
-
-Console.WriteLine($"Tokens parsed in {clock.ElapsedMilliseconds} ms");
-
-clock.Restart();
-
-var assembly = ShellAssembler.CompileAssembly(blocks);
-
-Console.WriteLine($"Assembly synthesized in {clock.ElapsedMilliseconds} ms");
-
-foreach (var item in assembly)
+void SetVariableMethod(string variableName, string value)
 {
-  Console.WriteLine(item.GetType().Name);
+  Console.WriteLine($"SetVariable: {variableName}, {value}");
+}
 
-  if (item is IFStatement fi)
+string GetVariableMethod(string variableName)
+{
+  Console.WriteLine($"GetVariable: {variableName}");
+  return "waah";
+}
+
+object? runWithReturn(string application, string[] args)
+{
+  Console.WriteLine($"RunWithReturn: {application}");
+  foreach (var item in args)
   {
-    foreach (var thing in fi.Run)
-    {
-      Console.WriteLine($"  {thing.GetType().Name}");
-    }
+    Console.WriteLine($"  arg: {item}");
+  }
+
+  return null;
+}
+
+void runNoReturn(string application, string[] args)
+{
+  Console.WriteLine($"RunWithoutReturn: {application}");
+  foreach (var item in args)
+  {
+    Console.WriteLine($"  arg: {item}");
   }
 }
+
+clock.Restart();
+waah.CompileProgram(script);
+Console.WriteLine($"Program compiled and run-ready in {clock.ElapsedMilliseconds} ms");
+
+var program = waah.RunProgram();
+
+clock.Restart();
+while (program.MoveNext())
+{
+}
+
+
+Console.WriteLine($"Program executed in {clock.ElapsedMilliseconds} ms");
