@@ -7,9 +7,8 @@ public class VariableAssignment(Literal variableName, Literal assignment) : Stat
   public readonly Literal VariableName = variableName;
   public readonly Literal Assignment = assignment;
 
-  public override object? Execute(ShellExecutable shell)
+  public override void Execute(ShellExecutable shell)
   {
     shell.SetVariable(VariableName.GetParsedValue(shell), Assignment.GetParsedValue(shell));
-    return null;
   }
 }

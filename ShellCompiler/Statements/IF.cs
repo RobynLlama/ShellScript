@@ -8,7 +8,7 @@ public class IFStatement(uint depth, IConditional condition, Statement[] run) : 
   public readonly IConditional Condition = condition;
   public readonly Statement[] Run = run;
 
-  public override object? Execute(ShellExecutable shell)
+  public override void Execute(ShellExecutable shell)
   {
     if (Condition.Evaluate(shell))
     {
@@ -17,7 +17,5 @@ public class IFStatement(uint depth, IConditional condition, Statement[] run) : 
         item.Execute(shell);
       }
     }
-
-    return null;
   }
 }
