@@ -2,9 +2,12 @@ using ShellCompiler.Statements;
 
 namespace ShellCompiler.Blocks;
 
-public abstract partial class Block
+public abstract partial class Block : IBlock
 {
-  public uint Depth = 0u;
-  public virtual Statement AssembleBlock(Queue<Block> blocks) =>
-    throw new NotImplementedException($"Unable to build block: {GetType().Name}");
+  public uint Depth { get; set; } = 0u;
+  public abstract Statement AssembleBlock(Queue<IToken> tokens);
+  public override string ToString()
+  {
+    return GetType().Name;
+  }
 }
