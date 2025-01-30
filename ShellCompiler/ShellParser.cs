@@ -4,14 +4,14 @@ namespace ShellCompiler;
 
 public static partial class ShellAssembler
 {
-  public static Queue<Block> ParseTokens(Queue<string> tokens)
+  public static Queue<IToken> ParseTokens(Queue<string> unsortedTokens)
   {
     uint currentBlockDepth = 0;
-    Queue<Block> blocks = [];
+    Queue<IToken> sortedTokens = [];
 
-    while (tokens.Count > 0)
+    while (unsortedTokens.Count > 0)
     {
-      var currentToken = tokens.Dequeue();
+      var currentToken = unsortedTokens.Dequeue();
 
       if (Keyword.TryGetKeyword(currentToken, out var result))
       {
@@ -30,7 +30,7 @@ public static partial class ShellAssembler
           result.Depth = currentBlockDepth;
         }
 
-        blocks.Enqueue(result);
+        sortedTokens.Enqueue(result);
         //Console.WriteLine($"Token: {currentToken} => {result.Symbol} @ {result.Depth}\n");
       }
       else
@@ -39,11 +39,11 @@ public static partial class ShellAssembler
         {
           Depth = currentBlockDepth
         };
-        blocks.Enqueue(block);
+        sortedTokens.Enqueue(block);
         //Console.WriteLine($"Token: {currentToken} => Literal @ {block.Depth}\n");
       }
     }
 
-    return blocks;
+    return sortedTokens;
   }
 }
