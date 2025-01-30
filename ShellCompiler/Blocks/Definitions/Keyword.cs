@@ -1,20 +1,13 @@
-using System;
 using System.Diagnostics.CodeAnalysis;
-using ShellCompiler.Statements;
 
 namespace ShellCompiler.Blocks;
 
-public abstract class Keyword : Block
+public static class Keyword
 {
-
-  public virtual bool DepthIncrease { get; } = false;
-  public virtual bool DepthDecrease { get; } = false;
-  public abstract ReservedSymbol Symbol { get; }
-
   private static readonly Dictionary<ReservedSymbol, Type> TypeTable = new()
   {
     {ReservedSymbol.IF, typeof(IFKeyword)},
-    {ReservedSymbol.END, typeof(NonBuildingKeywordLowDepth)},
+    {ReservedSymbol.END, typeof(GenericKeywordLowDepth)},
   };
 
   private static readonly Dictionary<string, ReservedSymbol> ConversionTable = new()
@@ -49,7 +42,7 @@ public abstract class Keyword : Block
   };
 
 
-  public static bool TryGetKeyword(string token, [NotNullWhen(true)] out Keyword? result)
+  public static bool TryGetKeyword(string token, [NotNullWhen(true)] out IKeyword? result)
   {
     result = null;
 
@@ -59,14 +52,14 @@ public abstract class Keyword : Block
     if (!TypeTable.TryGetValue(symbol, out var type))
     {
       //use the most generic non building type
-      result = new NonBuildingKeyword(symbol);
+      result = new GenericKeyword(symbol);
       return true;
     }
 
-    if (type.IsAssignableTo(typeof(NonBuildingKeyword)))
+    if (type.IsAssignableTo(typeof(GenericKeyword)))
     {
       //its a generic type so we have to send it the symbol type
-      if (Activator.CreateInstance(type, [symbol]) is not NonBuildingKeyword nkw)
+      if (Activator.CreateInstance(type, [symbol]) is not GenericKeyword nkw)
         return false;
 
       result = nkw;
@@ -74,14 +67,10 @@ public abstract class Keyword : Block
     }
 
     //No arguments
-    if (Activator.CreateInstance(type) is not Keyword kw)
+    if (Activator.CreateInstance(type) is not KeywordBlock kw)
       return false;
 
     result = kw;
     return true;
   }
-
-  public override Statement AssembleBlock(Queue<Block> blocks) =>
-    throw new NotImplementedException($"Unable to build block: {Symbol}");
-
 }
