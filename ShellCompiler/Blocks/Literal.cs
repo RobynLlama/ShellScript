@@ -63,19 +63,22 @@ public partial class Literal(string input) : Block
     return Value;
   }
 
-  public override Statement AssembleBlock(Queue<Block> blocks)
+  public override Statement AssembleBlock(Queue<IToken> tokens)
   {
 
-    var next = blocks.Peek();
+    if (tokens.Count == 0)
+      throw new InvalidOperationException("Unexpected end of file while creating literal");
 
-    if (next is Keyword kw && kw.Symbol == ReservedSymbol.ASSIGNMENT)
+    var next = tokens.Peek();
+
+    if (next is IKeyword kw && kw.Symbol == ReservedSymbol.ASSIGNMENT)
     {
-      blocks.Dequeue();
+      tokens.Dequeue();
 
-      if (blocks.Count == 0)
+      if (tokens.Count == 0)
         throw new InvalidOperationException("Unexpected end of file in Literal.AssembleBlock");
 
-      next = blocks.Dequeue();
+      next = tokens.Dequeue();
 
       if (next is not Literal lit)
         throw new InvalidOperationException($"Expected literal in Literal.AssembleBlock. Block: {next.GetType().Name}");
@@ -86,13 +89,13 @@ public partial class Literal(string input) : Block
 
     List<Literal> arguments = [];
 
-    while (blocks.Count > 0)
+    while (tokens.Count > 0)
     {
-      next = blocks.Dequeue();
+      next = tokens.Dequeue();
 
       if (next is not Literal lit)
       {
-        if (next is not Keyword key)
+        if (next is not IKeyword key)
           throw new InvalidOperationException($"Something other than a literal in arguments list of binary literal {next.GetType().Name}");
 
         switch (key.Symbol)
