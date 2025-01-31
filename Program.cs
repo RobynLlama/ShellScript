@@ -1,4 +1,4 @@
-﻿// See https://aka.ms/new-console-template for more information
+// See https://aka.ms/new-console-template for more information
 using System.Diagnostics;
 using ShellCompiler;
 
@@ -31,13 +31,13 @@ ShellExecutable waah = new(runNoReturn, runWithReturn, GetVariableMethod, SetVar
 
 void SetVariableMethod(string variableName, object value)
 {
-  Console.WriteLine($"SetVariable: {variableName}, {value} : {value.GetType().Name}");
+  //Console.WriteLine($"SetVariable: {variableName}, {value} : {value.GetType().Name}");
   Variables[variableName] = new(value);
 }
 
 VariableStore GetVariableMethod(string variableName)
 {
-  Console.WriteLine($"GetVariable: {variableName}");
+  //Console.WriteLine($"GetVariable: {variableName}");
 
   if (Variables.TryGetValue(variableName, out var thing))
     return thing;
@@ -47,22 +47,12 @@ VariableStore GetVariableMethod(string variableName)
 
 object? runWithReturn(string application, string[] args)
 {
-  Console.WriteLine($"RunWithReturn: {application}");
-  foreach (var item in args)
-  {
-    Console.WriteLine($"  arg: {item}");
-  }
-
   return null;
 }
 
 void runNoReturn(string application, string[] args)
 {
-  Console.WriteLine($"RunWithoutReturn: {application}");
-  foreach (var item in args)
-  {
-    Console.WriteLine($"  arg: {item}");
-  }
+
 }
 
 clock.Restart();
