@@ -1,8 +1,6 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using System.Diagnostics;
-using System.Text;
 using ShellCompiler;
-using ShellCompiler.Statements;
 
 //Console.WriteLine("Shellscript Interpreter");
 Stopwatch clock = new();
@@ -34,12 +32,17 @@ ShellExecutable waah = new(runNoReturn, runWithReturn, GetVariableMethod, SetVar
 void SetVariableMethod(string variableName, string value)
 {
   Console.WriteLine($"SetVariable: {variableName}, {value}");
+  Variables[variableName] = value;
 }
 
 string GetVariableMethod(string variableName)
 {
   Console.WriteLine($"GetVariable: {variableName}");
-  return "waah";
+
+  if (Variables.TryGetValue(variableName, out var thing))
+    return thing;
+
+  return string.Empty;
 }
 
 object? runWithReturn(string application, string[] args)
