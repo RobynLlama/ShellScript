@@ -19,9 +19,7 @@ public class ExpressionWrapper(string expression)
 
     foreach (var name in names)
     {
-      var thing = shell.GetVariable(name);
-      Console.WriteLine($"Binding {name} to {thing.GetValueForExpression()}");
-      exp.Bind("_" + name, thing.GetValueForExpression());
+      exp.Bind("_" + name, shell.GetVariable(name).GetValueForExpression());
     }
 
     return exp;
