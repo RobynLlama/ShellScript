@@ -1,4 +1,4 @@
-// See https://aka.ms/new-console-template for more information
+﻿// See https://aka.ms/new-console-template for more information
 using System.Diagnostics;
 using ShellCompiler;
 
@@ -19,7 +19,7 @@ cat < input.txt
 ls|cat
 
 IF ($Var + 1 == 13.5)
-  echo "$Var"
+  echo "$Var + 1 == 13.5"
   Var = "cool!"
 END
 
@@ -52,7 +52,10 @@ object? runWithReturn(string application, string[] args)
 
 void runNoReturn(string application, string[] args)
 {
-
+  if (application == "echo")
+  {
+    Console.WriteLine(string.Join(' ', args));
+  }
 }
 
 clock.Restart();
