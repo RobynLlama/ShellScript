@@ -7,10 +7,16 @@ namespace ShellCompiler.Blocks;
 /// A block containing a literal value, possibly single or double quoted
 /// </summary>
 /// <param name="input"></param>
-public partial class Literal(string input) : Block
+public partial class Literal : Block
 {
-  public readonly string Value = input;
+  public readonly string Value;
   public bool IsVariableLiteral = false;
+
+  public Literal(string input)
+  {
+    IsVariableLiteral = input.StartsWith('$');
+    Value = IsVariableLiteral ? input.TrimStart('$') : input;
+  }
 
   /// <summary>
   /// Pregenerated Regex to match variables
