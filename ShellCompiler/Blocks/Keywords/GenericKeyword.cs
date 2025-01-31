@@ -1,6 +1,6 @@
 namespace ShellCompiler.Blocks;
 
-public class GenericKeyword : KeywordToken
+public class GenericKeyword : SymbolToken
 {
   public GenericKeyword(ReservedSymbol symbol)
   {

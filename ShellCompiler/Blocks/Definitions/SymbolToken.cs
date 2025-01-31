@@ -1,6 +1,6 @@
 namespace ShellCompiler.Blocks;
 
-public abstract class KeywordToken : IKeyword
+public abstract class SymbolToken : ISymbol
 {
   public bool DepthIncrease { get; protected set; } = false;
   public bool DepthDecrease { get; protected set; } = false;
