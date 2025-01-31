@@ -2,8 +2,12 @@ namespace ShellCompiler.Blocks;
 
 public class Operator : SymbolToken
 {
-  public Operator(ReservedSymbol symbol)
+
+  public readonly string ExpressionText;
+
+  public Operator(ReservedSymbol symbol, string expressionText)
   {
     Symbol = symbol;
+    ExpressionText = expressionText;
   }
 }

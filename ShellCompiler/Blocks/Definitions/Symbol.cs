@@ -56,7 +56,7 @@ public static class Symbol
       if (!OperatorConversionTable.TryGetValue(token.ToLowerInvariant(), out var op))
         return false;
 
-      result = new Operator(op);
+      result = new Operator(op, token);
       //Console.WriteLine($"Returning {op}");
       return true;
     }
