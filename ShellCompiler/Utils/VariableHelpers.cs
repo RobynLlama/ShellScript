@@ -40,5 +40,5 @@ public static partial class Utils
       input = input.Replace($"${item}", shell.GetVariable(item).GetValueForTerminal());
   }
 
-  public static void BindVariableNames(ShellExecutable shell, ref string input, bool preserveQuotes = false) => BindVariableNames(shell, ref input, GetVariableNames(input));
+  public static void BindVariableNames(ShellExecutable shell, ref string input) => BindVariableNames(shell, ref input, GetVariableNames(input));
 }

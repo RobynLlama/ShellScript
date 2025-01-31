@@ -153,7 +153,7 @@ public static partial class ShellAssembler
           //this token breaks tokens before and after it
 
           SaveAndClearBuffer();
-          //buffer.Append(current);
+          buffer.Append(current);
 
           //terminates on line ending or another single/double quote
           while (!PeekCompareNext([current, '\n', '\r']))
@@ -165,7 +165,7 @@ public static partial class ShellAssembler
           if (PeekCompareNext([current]))
           {
             stream.Dequeue();
-            //buffer.Append(current);
+            buffer.Append(current);
             break;
           }
 

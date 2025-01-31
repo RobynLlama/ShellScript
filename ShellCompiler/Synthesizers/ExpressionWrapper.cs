@@ -8,14 +8,25 @@ public class ExpressionWrapper(string expression)
   private Expression BindVariables(ShellExecutable shell)
   {
     string newExpression = Original;
+    var names = Utils.GetVariableNames(newExpression);
 
-    Utils.BindVariableNames(shell, ref newExpression);
+    foreach (var name in names)
+    {
+      newExpression = newExpression.Replace("$" + name, "_" + name);
+    }
 
-    //Console.WriteLine(newExpression);
+    var exp = new Expression(newExpression);
 
-    return new(newExpression);
+    foreach (var name in names)
+    {
+      var thing = shell.GetVariable(name);
+      Console.WriteLine($"Binding {name} to {thing.GetValueForExpression()}");
+      exp.Bind("_" + name, thing.GetValueForExpression());
+    }
+
+    return exp;
   }
 
   public bool RunAsConditional(ShellExecutable shell) => BindVariables(shell).Eval<bool>();
-  public string Eval(ShellExecutable shell) => BindVariables(shell).Eval<string>();
+  public object Eval(ShellExecutable shell) => BindVariables(shell).Eval();
 }

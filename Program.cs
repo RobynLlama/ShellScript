@@ -5,7 +5,7 @@ using ShellCompiler;
 //Console.WriteLine("Shellscript Interpreter");
 Stopwatch clock = new();
 
-Dictionary<string, string> Variables = [];
+Dictionary<string, VariableStore> Variables = [];
 
 string script =
 """
@@ -29,20 +29,20 @@ echo "Script done!"
 
 ShellExecutable waah = new(runNoReturn, runWithReturn, GetVariableMethod, SetVariableMethod);
 
-void SetVariableMethod(string variableName, string value)
+void SetVariableMethod(string variableName, object value)
 {
-  Console.WriteLine($"SetVariable: {variableName}, {value}");
-  Variables[variableName] = value;
+  Console.WriteLine($"SetVariable: {variableName}, {value} : {value.GetType().Name}");
+  Variables[variableName] = new(value);
 }
 
-string GetVariableMethod(string variableName)
+VariableStore GetVariableMethod(string variableName)
 {
   Console.WriteLine($"GetVariable: {variableName}");
 
   if (Variables.TryGetValue(variableName, out var thing))
     return thing;
 
-  return string.Empty;
+  return new(string.Empty);
 }
 
 object? runWithReturn(string application, string[] args)

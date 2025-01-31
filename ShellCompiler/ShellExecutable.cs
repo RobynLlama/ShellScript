@@ -6,8 +6,8 @@ namespace ShellCompiler;
 
 public delegate object? RunApplicationWithReturn(string application, string[] args);
 public delegate void RunApplicationNoReturn(string application, string[] args);
-public delegate string GetVariable(string variableName);
-public delegate void SetVariable(string variableName, string value);
+public delegate VariableStore GetVariable(string variableName);
+public delegate void SetVariable(string variableName, object value);
 
 public class ShellExecutable(RunApplicationNoReturn runNoReturnDelegate, RunApplicationWithReturn runWithReturnDelegate, GetVariable getVarDelegate, SetVariable setVarDelegate)
 {
