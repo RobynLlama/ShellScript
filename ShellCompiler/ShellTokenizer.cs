@@ -52,6 +52,20 @@ public static partial class ShellAssembler
           break;
 
         //Reserved characters that can grow
+        case '$':
+          //this token can grow until it reaches a delimiter
+          buffer.Append(current);
+
+          while (!PeekCompareNext([' ', ';', '\r', '\n']))
+          {
+            buffer.Append(stream.Dequeue());
+          }
+
+          var next = stream.Peek();
+          if (next == '\r' || next == '\n')
+            throw new InvalidOperationException("Unexpected end of line reached in variable name");
+
+          break;
         case '=':
           //this token can grow and become ==
           //this token breaks tokens before and after it
@@ -106,7 +120,6 @@ public static partial class ShellAssembler
           break;
 
         //Reserved characters that cannot grow
-        case '$':
         case '{':
         case '}':
         case '[':
