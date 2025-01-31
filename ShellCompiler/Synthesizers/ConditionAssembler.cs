@@ -14,9 +14,9 @@ public static partial class Synthesizers
     //  Right hand literal
     //  close_parenthesis
 
-    Literal? left = null;
+    RunnableBlock? left = null;
     ReservedSymbol symbol = ReservedSymbol.STATEMENT_TERMINATOR;
-    Literal? right = null;
+    RunnableBlock? right = null;
     bool par_closed = false;
     bool par_opened = false;
 
@@ -44,7 +44,7 @@ public static partial class Synthesizers
 
       if (left is null)
       {
-        if (current is not Literal lw)
+        if (current is not RunnableBlock lw)
           throw new InvalidOperationException($"Expected literal as left hand term while building conditional. Block: {current.GetType().Name}");
 
         left = lw;
@@ -62,7 +62,7 @@ public static partial class Synthesizers
 
       if (right is null)
       {
-        if (current is not Literal lw)
+        if (current is not RunnableBlock lw)
           throw new InvalidOperationException($"Expected literal as right hand term while building conditional. Block: {current.GetType().Name}");
 
         right = lw;
