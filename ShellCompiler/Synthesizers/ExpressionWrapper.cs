@@ -9,7 +9,7 @@ public class ExpressionWrapper(string expression)
   {
     string newExpression = Original;
 
-    Utils.BindVariableNames(shell, ref newExpression, preserveQuotes: true);
+    Utils.BindVariableNames(shell, ref newExpression);
 
     //Console.WriteLine(newExpression);
 

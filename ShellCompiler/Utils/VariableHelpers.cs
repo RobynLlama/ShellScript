@@ -34,11 +34,11 @@ public static partial class Utils
     return [.. variables];
   }
 
-  public static void BindVariableNames(ShellExecutable shell, ref string input, string[] variables, bool preserveQuotes = false)
+  public static void BindVariableNames(ShellExecutable shell, ref string input, string[] variables)
   {
     foreach (var item in variables)
-      input = input.Replace($"${item}", shell.GetVariable(item, preserveQuotes));
+      input = input.Replace($"${item}", shell.GetVariable(item).GetValueForTerminal());
   }
 
-  public static void BindVariableNames(ShellExecutable shell, ref string input, bool preserveQuotes = false) => BindVariableNames(shell, ref input, GetVariableNames(input), preserveQuotes);
+  public static void BindVariableNames(ShellExecutable shell, ref string input, bool preserveQuotes = false) => BindVariableNames(shell, ref input, GetVariableNames(input));
 }
