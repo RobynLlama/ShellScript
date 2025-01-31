@@ -10,12 +10,12 @@ public static partial class ShellAssembler
 
     List<Statement> statements = [];
 
-    Console.WriteLine($"Performing second pass [{input.Count}]");
+    Console.WriteLine($"Assembling [{input.Count}] tokens");
 
     while (input.Count > 0)
     {
       var current = input.Dequeue();
-      Console.WriteLine($"Processing {current}");
+      //Console.WriteLine($"Processing {current}");
 
       if (current is not IBlock next)
       {

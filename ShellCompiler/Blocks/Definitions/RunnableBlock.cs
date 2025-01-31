@@ -7,7 +7,7 @@ public abstract class RunnableBlock : Block
   public override Statement AssembleBlock(Queue<IToken> tokens)
   {
     IToken next;
-    Console.WriteLine("Assembling: RunnableToken");
+    //Console.WriteLine("Assembling: RunnableToken");
 
     List<RunnableBlock> arguments = [];
 
@@ -40,7 +40,7 @@ public abstract class RunnableBlock : Block
 
   finish:
 
-    Console.WriteLine("Assembly Complete");
+    //Console.WriteLine("Assembly Complete");
     return new RunBinary(this, [.. arguments]);
   }
 

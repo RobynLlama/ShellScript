@@ -9,7 +9,7 @@ public class VariableBlock(string input) : RunnableBlock
     shell.GetVariable(Varname);
   public override Statement AssembleBlock(Queue<IToken> tokens)
   {
-    Console.WriteLine("Assembling: VariableReader");
+    //Console.WriteLine("Assembling: VariableReader");
     //If there are no tokens this isn't an assignment
     if (tokens.Count == 0)
       return base.AssembleBlock(tokens);
@@ -28,7 +28,7 @@ public class VariableBlock(string input) : RunnableBlock
       if (next is not RunnableBlock lit)
         throw new InvalidOperationException($"Expected literal in Literal.AssembleBlock. Block: {next.GetType().Name}");
 
-      Console.WriteLine("Assembly Complete");
+      //Console.WriteLine("Assembly Complete");
       return new VariableAssignment(this, lit);
     }
 
