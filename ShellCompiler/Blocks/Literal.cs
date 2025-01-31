@@ -10,6 +10,7 @@ namespace ShellCompiler.Blocks;
 public partial class Literal(string input) : RunnableBlock
 {
   public readonly string Value = input;
+  public override string RawValue { get => Value; }
 
   /// <summary>
   /// Pregenerated Regex to match variables

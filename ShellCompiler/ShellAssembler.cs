@@ -19,7 +19,7 @@ public static partial class ShellAssembler
 
       if (current is not IBlock next)
       {
-        if (current is IKeyword kw)
+        if (current is ISymbol kw)
         {
           if (kw.Symbol != ReservedSymbol.STATEMENT_TERMINATOR)
             throw new InvalidOperationException($"Non build token encountered in stream {kw}");

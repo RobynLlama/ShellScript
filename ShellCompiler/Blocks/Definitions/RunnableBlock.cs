@@ -4,6 +4,7 @@ namespace ShellCompiler.Blocks;
 
 public abstract class RunnableBlock : Block
 {
+  public abstract string RawValue { get; }
   public override Statement AssembleBlock(Queue<IToken> tokens)
   {
     IToken next;
@@ -11,7 +12,7 @@ public abstract class RunnableBlock : Block
 
     next = tokens.Peek();
 
-    if (next is IKeyword kw && kw.Symbol == ReservedSymbol.ASSIGNMENT)
+    if (next is Operator kw && kw.Symbol == ReservedSymbol.ASSIGNMENT)
     {
       tokens.Dequeue();
 
@@ -35,7 +36,7 @@ public abstract class RunnableBlock : Block
 
       if (next is not RunnableBlock rToken)
       {
-        if (next is not IKeyword key)
+        if (next is not Operator key)
           throw new InvalidOperationException($"Something other than a literal in arguments list of binary literal {next.GetType().Name}");
 
         switch (key.Symbol)
@@ -49,7 +50,7 @@ public abstract class RunnableBlock : Block
           case ReservedSymbol.STATEMENT_TERMINATOR:
             goto finish;
           default:
-            throw new InvalidOperationException($"Unexpected keyword in literal binary arguments list {key.Symbol}");
+            throw new InvalidOperationException($"Unexpected operator in runnable binary arguments list {key.Symbol}");
         }
       }
 
@@ -63,4 +64,8 @@ public abstract class RunnableBlock : Block
   }
 
   public abstract string GetParsedValue(ShellExecutable shell);
+  public override string ToString()
+  {
+    return $"{GetType().Name}:{RawValue}";
+  }
 }

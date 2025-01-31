@@ -13,7 +13,7 @@ public static partial class ShellAssembler
     {
       var currentToken = unsortedTokens.Dequeue();
 
-      if (Keyword.TryGetKeyword(currentToken, out var result))
+      if (Symbol.TryGetKeyword(currentToken, out var result))
       {
 
         if (result.DepthIncrease)

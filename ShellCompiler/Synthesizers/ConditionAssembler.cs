@@ -35,7 +35,7 @@ public static partial class Synthesizers
 
       if (!par_opened)
       {
-        if (current is not IKeyword kw || kw.Symbol != ReservedSymbol.PARENTHESIS_OPEN)
+        if (current is not ISymbol kw || kw.Symbol != ReservedSymbol.PARENTHESIS_OPEN)
           throw new InvalidOperationException($"Expecting an open parenthesis while building conditional. Block: {current.GetType().Name}");
 
         par_opened = true;
@@ -53,7 +53,7 @@ public static partial class Synthesizers
 
       if (symbol == ReservedSymbol.STATEMENT_TERMINATOR)
       {
-        if (current is not IKeyword kw)
+        if (current is not ISymbol kw)
           throw new InvalidOperationException($"Expected keyword while building conditional. Block: {current.GetType().Name}");
 
         symbol = kw.Symbol;
@@ -71,7 +71,7 @@ public static partial class Synthesizers
 
       if (!par_closed)
       {
-        if (current is not IKeyword kw || kw.Symbol != ReservedSymbol.PARENTHESIS_CLOSE)
+        if (current is not ISymbol kw || kw.Symbol != ReservedSymbol.PARENTHESIS_CLOSE)
           throw new InvalidOperationException($"Expecting an close parenthesis while building conditional. Block: {current.GetType().Name}");
 
         par_closed = true;

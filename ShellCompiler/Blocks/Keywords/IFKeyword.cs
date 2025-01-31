@@ -2,7 +2,7 @@ using ShellCompiler.Statements;
 
 namespace ShellCompiler.Blocks;
 
-public class IFKeyword : KeywordBlock
+public class IFKeyword : Keyword
 {
   public IFKeyword()
   {
@@ -33,7 +33,7 @@ public class IFKeyword : KeywordBlock
 
       tokens.Dequeue();
 
-      if (next is IKeyword kw)
+      if (next is ISymbol kw)
       {
         if (kw.Symbol == ReservedSymbol.END)
           break;
