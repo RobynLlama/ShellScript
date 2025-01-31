@@ -12,13 +12,13 @@ string script =
 #My first script!
 echo "My first Script"
 ls #list the directory
-cd /user/me/coolStuff
-Var = "thing"
+cd "/user/me/coolStuff"
+Var = 12.5
 cat >> output.txt
 cat < input.txt
 ls|cat
 
-IF ($Var == "thing")
+IF ($Var + 1 == 13.5)
   echo "$Var"
   Var = "cool!"
 END
