@@ -9,7 +9,7 @@ public class EqualityStatement(Literal leftHand, Literal rightHand) : ICondition
 
   public bool Evaluate(ShellExecutable shell)
   {
-    Console.WriteLine($"Evaluating {LeftHand.Value} == {RightHand.Value}");
-    return true;
+    //Console.WriteLine($"Evaluating {LeftHand.GetParsedValue(shell)} == {RightHand.GetParsedValue(shell)}");
+    return LeftHand.GetParsedValue(shell) == RightHand.GetParsedValue(shell);
   }
 }
