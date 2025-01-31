@@ -7,7 +7,25 @@ public abstract class RunnableBlock : Block
   public override Statement AssembleBlock(Queue<IToken> tokens)
   {
     IToken next;
-    //Console.WriteLine("Assembling: RunnableToken");
+    //Console.WriteLine($"Assembling: {this}");
+
+    next = tokens.Peek();
+
+    if (next is IKeyword kw && kw.Symbol == ReservedSymbol.ASSIGNMENT)
+    {
+      tokens.Dequeue();
+
+      if (tokens.Count == 0)
+        throw new InvalidOperationException("Unexpected end of file in Literal.AssembleBlock");
+
+      next = tokens.Dequeue();
+
+      if (next is not RunnableBlock lit)
+        throw new InvalidOperationException($"Expected runnable in runnable.AssembleBlock. Block: {next.GetType().Name}");
+
+      //Console.WriteLine("Assembly Complete as VariableAssignment");
+      return new VariableAssignment(this, lit);
+    }
 
     List<RunnableBlock> arguments = [];
 
@@ -40,7 +58,7 @@ public abstract class RunnableBlock : Block
 
   finish:
 
-    //Console.WriteLine("Assembly Complete");
+    //Console.WriteLine("Assembly Complete as RunBinary");
     return new RunBinary(this, [.. arguments]);
   }
 
