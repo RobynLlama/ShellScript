@@ -4,7 +4,7 @@ namespace ShellCompiler.Blocks;
 
 public abstract class RunnableBlock : Block
 {
-  public abstract string RawValue { get; }
+  public abstract string ExpressionValue { get; }
   public override Statement AssembleBlock(Queue<IToken> tokens)
   {
     IToken next;
@@ -55,6 +55,6 @@ public abstract class RunnableBlock : Block
   public abstract string GetParsedValue(ShellExecutable shell);
   public override string ToString()
   {
-    return $"{GetType().Name}:{RawValue}";
+    return $"{GetType().Name}:{ExpressionValue}";
   }
 }
