@@ -10,22 +10,11 @@ public abstract class RunnableBlock : Block
     IToken next;
     //Console.WriteLine($"Assembling: {this}");
 
-    next = tokens.Peek();
-
-    if (next is Operator kw && kw.Symbol == ReservedSymbol.ASSIGNMENT)
+    if (tokens.TryPeek(out var nextOp) && nextOp is Operator kw && kw.Symbol == ReservedSymbol.ASSIGNMENT)
     {
       tokens.Dequeue();
 
-      if (tokens.Count == 0)
-        throw new InvalidOperationException("Unexpected end of file in Literal.AssembleBlock");
-
-      next = tokens.Dequeue();
-
-      if (next is not RunnableBlock lit)
-        throw new InvalidOperationException($"Expected runnable in runnable.AssembleBlock. Block: {next.GetType().Name}");
-
-      //Console.WriteLine("Assembly Complete as VariableAssignment");
-      return new VariableAssignment(this, lit);
+      return new VariableAssignment(this, Synthesizers.AssembleExpressionString(tokens));
     }
 
     List<RunnableBlock> arguments = [];
