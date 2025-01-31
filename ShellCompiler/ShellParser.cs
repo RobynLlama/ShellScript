@@ -37,13 +37,13 @@ public static partial class ShellAssembler
       {
         IToken block;
 
-        if (unsortedTokens.Count == 0 || unsortedTokens.Peek() != "=")
-          block = new Literal(currentToken)
+        if (currentToken.StartsWith('$'))
+          block = new VariableBlock(currentToken)
           {
             Depth = currentBlockDepth
           };
         else
-          block = new VariableBlock(currentToken)
+          block = new Literal(currentToken)
           {
             Depth = currentBlockDepth
           };
