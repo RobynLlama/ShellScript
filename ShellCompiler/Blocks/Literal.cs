@@ -64,6 +64,8 @@ public partial class Literal : Block
       {
         output = output.Replace($"${item}", shell.GetVariable(item));
       }
+
+      return output;
     }
 
     return Value;
