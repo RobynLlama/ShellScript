@@ -55,7 +55,7 @@ public static partial class Synthesizers
     if (!anything)
       throw new InvalidOperationException("Empty expression in AssembleExpressionString");
 
-    Console.WriteLine(fullExpression);
+    //Console.WriteLine(fullExpression);
 
     return new(fullExpression.ToString());
   }

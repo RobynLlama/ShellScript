@@ -11,7 +11,7 @@ public class ExpressionWrapper(string expression)
 
     Utils.BindVariableNames(shell, ref newExpression, preserveQuotes: true);
 
-    Console.WriteLine(newExpression);
+    //Console.WriteLine(newExpression);
 
     return new(newExpression);
   }
