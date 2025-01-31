@@ -41,7 +41,7 @@ public static partial class Synthesizers
 
       if (next is RunnableBlock rb)
       {
-        AddToExpression(rb.RawValue);
+        AddToExpression(rb.ExpressionValue);
       }
       else if (next is Operator op)
       {
