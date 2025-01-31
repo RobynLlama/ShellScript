@@ -2,10 +2,10 @@ using ShellCompiler.Blocks;
 
 namespace ShellCompiler.Statements;
 
-public class RunBinary(Literal binaryName, Literal[] arguments) : Statement
+public class RunBinary(RunnableBlock binaryName, RunnableBlock[] arguments) : Statement
 {
-  public readonly Literal BinaryName = binaryName;
-  public readonly Literal[] Arguments = arguments;
+  public readonly RunnableBlock BinaryName = binaryName;
+  public readonly RunnableBlock[] Arguments = arguments;
 
   public override void Execute(ShellExecutable shell)
   {
