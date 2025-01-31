@@ -6,7 +6,7 @@ namespace ShellCompiler;
 
 public static partial class Synthesizers
 {
-  public static Expression AssembleExpressionString(Queue<IToken> tokens)
+  public static ExpressionWrapper AssembleExpressionString(Queue<IToken> tokens)
   {
     //Expression assembles:
     //  -No  keywords
@@ -36,6 +36,8 @@ public static partial class Synthesizers
 
       if (next is Keyword kw)
         throw new InvalidOperationException($"Unexpected Keyword in AssembleExpressionString {kw}");
+
+      tokens.Dequeue();
 
       if (next is RunnableBlock rb)
       {

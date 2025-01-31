@@ -9,6 +9,6 @@ public class VariableAssignment(RunnableBlock variableName, RunnableBlock assign
 
   public override void Execute(ShellExecutable shell)
   {
-    shell.SetVariable(VariableName.GetParsedValue(shell), Assignment.GetParsedValue(shell));
+    shell.SetVariable(VariableName.GetParsedValue(shell), Assignment.GetParsedValue(shell, preserveQuotes: true));
   }
 }

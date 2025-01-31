@@ -19,7 +19,7 @@ public class IFKeyword : Keyword
 
     //Console.WriteLine("Creating conditional");
 
-    IConditional conditional = Synthesizers.AssembleConditional(tokens);
+    ExpressionWrapper conditional = Synthesizers.AssembleConditionExpression(tokens);
     List<Statement> statements = [];
 
     //Console.WriteLine($"Accumulating statements for depth {Depth}");
