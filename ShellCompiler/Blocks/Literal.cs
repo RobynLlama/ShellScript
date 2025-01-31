@@ -18,15 +18,11 @@ public partial class Literal(string input) : RunnableBlock
   /// </summary>
   /// <param name="shell"></param>
   /// <returns></returns>
-  public override string GetParsedValue(ShellExecutable shell, bool preserveQuotes = false)
+  public override string GetParsedValue(ShellExecutable shell)
   {
     string output = Value;
 
-    if (!Value.StartsWith('\''))
-      Utils.BindVariableNames(shell, ref output);
-
-    if (!preserveQuotes)
-      return output.Trim('"').Trim('\'');
+    Utils.BindVariableNames(shell, ref output);
 
     return output;
   }
