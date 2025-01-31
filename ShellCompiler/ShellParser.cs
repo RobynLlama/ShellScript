@@ -35,10 +35,20 @@ public static partial class ShellAssembler
       }
       else
       {
-        var block = new Literal(currentToken)
-        {
-          Depth = currentBlockDepth
-        };
+        IToken block;
+
+        if (unsortedTokens.Count == 0 || unsortedTokens.Peek() != "=")
+          block = new Literal(currentToken)
+          {
+            Depth = currentBlockDepth
+          };
+        else
+          block = new VariableBlock(currentToken)
+          {
+            Depth = currentBlockDepth
+          };
+
+
         sortedTokens.Enqueue(block);
         //Console.WriteLine($"Token: {currentToken} => Literal @ {block.Depth}\n");
       }
